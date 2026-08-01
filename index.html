@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Kanit', sans-serif; }
+        
+        /* พื้นหลังดวงดาว/จุดแสง */
+        .stars {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 40px 70px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 50px 160px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 90px 40px, #ffffff, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 130px 80px, #ffffff, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.15;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* กล่อง Login แบบ Neural Theme */
+        .glass-panel {
+            background: linear-gradient(145deg, rgba(15,23,42,0.9) 0%, rgba(11,15,25,0.95) 100%);
+            border: 1px solid rgba(51, 65, 85, 0.4);
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        /* ช่องกรอกข้อมูล */
+        .cyber-input {
+            background-color: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(51, 65, 85, 0.6);
+            color: #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .cyber-input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.2);
+            background-color: rgba(30, 41, 59, 0.8);
+        }
+        
+        /* ปุ่มแบบไล่สีล้ำๆ */
+        .btn-gradient {
+            background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+            transition: all 0.3s ease;
+        }
+        .btn-gradient:hover {
+            background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-[#060913] flex items-center justify-center relative overflow-hidden">
+    
+    <div class="stars"></div>
+    
+    <div class="glass-panel p-10 rounded-2xl w-full max-w-[400px] relative z-10 mx-4">
+        
+        <!-- โลโก้ / ไอคอน -->
+        <div class="flex justify-center mb-8">
+            <div class="relative flex items-center justify-center w-16 h-16 rounded-full border border-indigo-500/30 bg-indigo-500/10 shadow-[0_0_15px_rgba(99,102,241,0.2)]">
+                <!-- วงแหวนหมุน (ตกแต่ง) -->
+                <div class="absolute inset-0 rounded-full border border-t-indigo-400 border-r-transparent border-b-transparent border-l-transparent animate-spin opacity-50" style="animation-duration: 3s;"></div>
+                
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="text-center mb-8">
+            <h2 class="text-2xl font-bold text-white mb-1 tracking-wide">Secure Access</h2>
+            <p class="text-slate-400 text-sm">Connect to the central workspace</p>
+        </div>
+        
+        <!-- กล่องแจ้งเตือน Error -->
+        <div id="error-alert-box" class="hidden mb-6 p-3 bg-rose-500/10 border border-rose-500/30 rounded-lg text-center flex flex-col items-center justify-center">
+            <p id="error-text" class="text-rose-400 text-sm font-medium">⚠️ ตรวจพบข้อผิดพลาด</p>
+        </div>
+
+        <!-- ฟอร์มเข้าสู่ระบบ -->
+        <div class="space-y-4">
+            <!-- ช่อง Email -->
+            <div class="relative">
+                <input type="email" id="email" placeholder="Email Address" 
+                       class="cyber-input w-full p-3.5 rounded-lg focus:outline-none text-sm placeholder-slate-500">
+                <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                    <div class="w-1.5 h-1.5 rounded-full bg-indigo-500 opacity-50"></div>
+                </div>
+            </div>
+
+            <!-- ช่อง Password -->
+            <div class="relative">
+                <input type="password" id="password" placeholder="Password" 
+                       class="cyber-input w-full p-3.5 rounded-lg focus:outline-none text-sm placeholder-slate-500">
+                <div class="absolute inset-y-0 right-3 flex items-center">
+                    <!-- ปุ่มตา สำหรับดูรหัสผ่าน (ทำหลอกไว้เฉยๆ ตามดีไซน์) -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500 hover:text-slate-300 cursor-pointer transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                    </svg>
+                    <div class="w-1.5 h-1.5 rounded-full bg-indigo-500 opacity-50 ml-2"></div>
+                </div>
+            </div>
+            
+            <!-- ตัวเลือกเพิ่มเติม (ตามภาพตัวอย่าง) -->
+            <div class="flex items-center justify-between mt-2 mb-6">
+                <label class="flex items-center gap-2 cursor-pointer group">
+                    <input type="checkbox" class="w-4 h-4 rounded border-slate-600 bg-slate-800 text-indigo-500 focus:ring-indigo-500 focus:ring-offset-slate-900 cursor-pointer">
+                    <span class="text-xs text-slate-400 group-hover:text-slate-300 transition-colors">จดจำ</span>
+                </label>
+                <a href="#" class="text-xs text-indigo-400 hover:text-indigo-300 transition-colors">Reset access</a>
+            </div>
+
+            <!-- ปุ่มเข้าสู่ระบบ -->
+            <button id="login-btn" 
+                    class="btn-gradient w-full text-white font-medium text-sm py-3.5 rounded-lg active:scale-[0.98] mt-2 flex justify-center items-center gap-2">
+                <span>เข้าสู่ระบบ</span>
+            </button>
+        </div>
+        
+        <!-- เส้นแบ่ง -->
+        <div class="relative flex py-6 items-center">
+            <div class="flex-grow border-t border-slate-700/50"></div>
+            <span class="flex-shrink-0 mx-4 text-slate-500 text-[10px] font-medium tracking-widest uppercase">ยินดีต้อนรับ</span>
+            <div class="flex-grow border-t border-slate-700/50"></div>
+        </div>
+        
+        <p class="text-center text-xs text-slate-500">
+            เฉพาะบุคคลที่ได้รับอนุญาตเท่านั้น
+        </p>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (localStorage.getItem('auth_error_alert') === 'true') {
+                const errorBox = document.getElementById('error-alert-box');
+                const errorText = document.getElementById('error-text');
+                errorText.innerHTML = "ออกจากระบบแล้ว";
+                errorBox.classList.remove('hidden');
+                localStorage.removeItem('auth_error_alert');
+            }
+        });
+    </script>
+
+    <script type="module" src="js/firebase-config.js"></script>
+    <script type="module" src="js/auth.js"></script>
+
+</body>
+</html>
