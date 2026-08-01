@@ -57,7 +57,7 @@ document.addEventListener('alpine:init', () => {
             clone.style.position = 'fixed';
             clone.style.top = '0';
             clone.style.left = '0';
-            clone.style.transform = 'scale(1)'; // บังคับขนาดจริง
+            clone.style.transform = 'scale(1)'; 
             clone.style.zIndex = '-9999';
             clone.style.boxShadow = 'none';
 
@@ -87,9 +87,9 @@ document.addEventListener('alpine:init', () => {
                     if (!blob) throw new Error('ไม่สามารถสร้างรูปภาพได้');
                     try {
                         await navigator.clipboard.write([new ClipboardItem({ [blob.type]: blob })]);
-                        alert('✅ คัดลอกรูปภาพแล้ว กด Ctrl+V เพื่อวางใน Line ได้เลย');
+                        alert('✅ คัดลอกรูปภาพแล้ว');
                     } catch (err) { 
-                        alert('เบราว์เซอร์ไม่รองรับการคัดลอกอัตโนมัติ กรุณาคลิกขวาที่รูปแล้วเลือก Copy Image'); 
+                        alert('เกิด้อผิดพลาดในการคัดลอก: ' + err.message); 
                     }
                     this.isCopying = false;
                 }, 'image/png');

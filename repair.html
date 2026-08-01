@@ -20,9 +20,8 @@
 
     <!-- ป๊อปอัปเมนู & โหลด -->
     <div x-show="showMenu" class="custom-menu" :style="`top: ${menuY}px; left: ${menuX}px`" @click.stop>
-        <div class="menu-item font-kanit" @click="copyImageToClipboard()"><span>📸</span> Copy รูปภาพทันที</div>
-        <div class="menu-item font-kanit" @click="uploadAndCopyLink()"><span>🔗</span> คัดลอกที่อยู่รูปภาพ</div>
-        <hr class="border-gray-700 my-1"><div class="menu-item font-kanit text-gray-400" @click="showMenu = false"><span>❌</span> ปิดเมนูซะ</div>
+        <div class="menu-item font-kanit" @click="copyImageToClipboard()"><span>📸</span> คัดลอกรูปภาพ</div>
+        <hr class="border-gray-700 my-1"><div class="menu-item font-kanit text-gray-400" @click="showMenu = false"><span>❌</span> ปิดเมนู</div>
     </div>
     <div x-show="isUploading" class="loader-overlay">
         <div class="spinner"></div><p class="mt-4 font-kanit text-orange-500 text-lg">กำลังประมวลผล...</p>
